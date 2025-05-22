@@ -29,6 +29,7 @@ class DFrac{  //manteremos sempre a fração reduzida
         }
 
         unsigned mdc(DFrac other) const{
+            //tem que ajustar o mdc para fazer a simplificação
             unsigned n1,n2,div,mdc;
 
             n1  = den;
