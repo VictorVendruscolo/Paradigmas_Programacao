@@ -65,39 +65,64 @@ class DFrac{  //manteremos sempre a fração reduzida
         unsigned getDen(){
             return den;
         }
-        DFrac operator +(const DFrac &other) {
+
+        // operadores de atribuição
+        // =, +=, -=, *=, /=
+    
+        DFrac operator +(const DFrac &other) const{
             unsigned mmc = this->mmc(other);
 
             return DFrac(mmc/den*num + mmc/other.den*other.num ,mmc);
         }
-        DFrac operator -(const DFrac &other) {
+        DFrac operator -(const DFrac &other) const{
             unsigned mmc = this->mmc(other);
             return DFrac(mmc/den*num - mmc/other.den*other.num, mmc);
         }
-        DFrac operator *(const DFrac &other) {
+        DFrac operator *(const DFrac &other) const{
             return DFrac(num * other.num, den * other.den);
         }
-        DFrac operator /(const DFrac &other) {
+        DFrac operator /(const DFrac &other) const{
             return DFrac(num * other.den, den * other.num);
         }
-        bool operator < (const DFrac &other){            
+        Dfrac operator ++(){ //pré fixado
+            num+=den;
+            return *this;
+        }
+        Dfrac operator ++(int){ //pós fixado
+            int oldNum = num;
+            num+=den;
+            return Dfrac(oldNum,den);
+        }
+
+        // operadores de comparação
+        // <, >, <=, >=, ==, !=
+
+        bool operator < (const DFrac &other) const{            
             unsigned mmc = this->mmc(other);
 
-            return (mmc/den*num - mmc/other.den*other.num) < 0;
+            return ((int)(mmc/den)*num - (int)(mmc/other.den)*other.num) < 0;
         
         }
-        bool operator > (const DFrac &other){
+        bool operator > (const DFrac &other) const{
             unsigned mmc = this->mmc(other);
             return (mmc/den*num - mmc/other.den*other.num) > 0;
         }
-        bool operator <= (const DFrac &other){
+        bool operator <= (const DFrac &other) const{
             unsigned mmc = this->mmc(other);
             return (mmc/den*num - mmc/other.den*other.num) <= 0;
         }
-        bool operator >= (const DFrac &other){
+        bool operator >= (const DFrac &other) const{
             unsigned mmc = this->mmc(other);
-            return (mmc/den*num - mmc/other.den*other.num) >= 0;
+            return ((int)(mmc/den)*num - (int)(mmc/other.den)*other.num) >= 0;
         }
+        bool operator == (const DFrac &other) const{
+            unsigned mmc = this->mmc(other);
+            return (mmc/den*num - mmc/other.den*other.num) == 0;
+        }
+        bool operator != (const DFrac &other) const{
+            return !(*this == other);
+        }
+
 
 };
 int main(){
@@ -108,6 +133,14 @@ int main(){
 
     f1 = f2 + f3;
     b  = f2 < f3;
+    f1 = f2 - f3;
+    f1 = f2 * f3;
+    f1 = f2 / f3;
+    b  = f2 > f3;
+    b  = f2 <= f3;
+    b  = f2 >= f3;
+    b  = f2 == f3;
+    b  = f2 != f3;
 
     cout<<f1.getNum()<<'/'<<f1.getDen();
 
